@@ -1,22 +1,22 @@
 # d3-dsv
 
-This module provides a parser and formatter for delimiter-separated values, most commonly [comma-](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) or tab-separated values (TSV). These tabular formats are popular with spreadsheet programs such as Microsoft Excel, and are often more space-efficient than JSON. This implementation is based on [RFC 4180](http://tools.ietf.org/html/rfc4180).
+这个模块提供了一个针对分隔符文件/字符串的解析和格式化工具，大多数情况下是[comma-](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) 或 `tab` - 分割(TSV)。这种扁平的格式在表格类数据中很流行如 `Excel`， 并且比 `JSON` 更节省空间。这个模块的实现基于 [RFC 4180](http://tools.ietf.org/html/rfc4180)。
 
-Comma (CSV) and tab (TSV) delimiters are built-in. For example, to parse:
+`CSV` 与 `TSV` 的转换以及格式化是内置的，比如解析：
 
 ```js
 d3.csvParse("foo,bar\n1,2"); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 d3.tsvParse("foo\tbar\n1\t2"); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```
 
-Or to format:
+或者格式化:
 
 ```js
 d3.csvFormat([{foo: "1", bar: "2"}]); // "foo,bar\n1,2"
 d3.tsvFormat([{foo: "1", bar: "2"}]); // "foo\tbar\n1\t2"
 ```
 
-To use a different delimiter, such as “|” for pipe-separated values, use [d3.dsvFormat](#dsvFormat):
+使用不同的分隔符，比如 "|" 来作为分割字符，则使用 [d3.dsvFormat](#dsvFormat):
 
 ```js
 var psv = d3.dsvFormat("|");
@@ -24,11 +24,11 @@ var psv = d3.dsvFormat("|");
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```
 
-For easy loading of DSV files in a browser, see [d3-request](https://github.com/d3/d3-request)’s [d3.csv](https://github.com/d3/d3-request#csv) and [d3.tsv](https://github.com/d3/d3-request#tsv) methods.
+为了在浏览器中方便的加载 `CSV` 文件，参考 [d3-request](https://github.com/xswei/d3-request) 的 [d3.csv](https://github.com/xswei/d3-request#csv) 和 [d3.tsv](https://github.com/xswei/d3-request#tsv) 方法。
 
 ## Installing
 
-If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-dsv.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+`NPM` 安装： `npm install d3-dsv`。此外还可以下载 [latest release](https://github.com/d3/d3-dsv/releases/latest)。可以直接从 [d3js.org](https://d3js.org) 以 [standalone library](https://d3js.org/d3-dsv.v1.min.js) 单独的标准库或者作为 [D3 4.0](https://github.com/d3/d3) 的一部分引入。支持 `AMD`, `CommonJS` 以及基础的标签引入形式，如果使用标签引入则会暴露 `d3` 全局变量:
 
 ```html
 <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
@@ -39,45 +39,45 @@ var data = d3.csvParse(string);
 </script>
 ```
 
-[Try d3-dsv in your browser.](https://tonicdev.com/npm/d3-dsv)
+[在浏览器中测试 d3-dsv.](https://tonicdev.com/npm/d3-dsv)
 
 ## API Reference
 
 <a name="csvParse" href="#csvParse">#</a> d3.<b>csvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js#L5 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)(",").[parse](#dsv_parse).
+等价于 [dsvFormat](#dsvFormat)(",").[parse](#dsv_parse).
 
 <a name="csvParseRows" href="#csvParseRows">#</a> d3.<b>csvParseRows</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js#L6 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)(",").[parseRows](#dsv_parseRows).
+等价于 [dsvFormat](#dsvFormat)(",").[parseRows](#dsv_parseRows).
 
 <a name="csvFormat" href="#csvFormat">#</a> d3.<b>csvFormat</b>(<i>rows</i>[, <i>columns</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js#L7 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)(",").[format](#dsv_format).
+等价于 [dsvFormat](#dsvFormat)(",").[format](#dsv_format).
 
 <a name="csvFormatRows" href="#csvFormatRows">#</a> d3.<b>csvFormatRows</b>(<i>rows</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js#L8 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)(",").[formatRows](#dsv_formatRows).
+等价于 [dsvFormat](#dsvFormat)(",").[formatRows](#dsv_formatRows).
 
 <a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js#L5 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse).
+等价于 [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse).
 
 <a name="tsvParseRows" href="#tsvParseRows">#</a> d3.<b>tsvParseRows</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js#L6 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)("\t").[parseRows](#dsv_parseRows).
+等价于 [dsvFormat](#dsvFormat)("\t").[parseRows](#dsv_parseRows).
 
 <a name="tsvFormat" href="#tsvFormat">#</a> d3.<b>tsvFormat</b>(<i>rows</i>[, <i>columns</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js#L7 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)("\t").[format](#dsv_format).
+等价于 [dsvFormat](#dsvFormat)("\t").[format](#dsv_format).
 
 <a name="tsvFormatRows" href="#tsvFormatRows">#</a> d3.<b>tsvFormatRows</b>(<i>rows</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js#L8 "Source")
 
-Equivalent to [dsvFormat](#dsvFormat)("\t").[formatRows](#dsv_formatRows).
+等价于 [dsvFormat](#dsvFormat)("\t").[formatRows](#dsv_formatRows).
 
 <a name="dsvFormat" href="#dsvFormat">#</a> d3.<b>dsvFormat</b>(<i>delimiter</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L30)
 
-Constructs a new DSV parser and formatter for the specified *delimiter*. The *delimiter* must be a single character (*i.e.*, a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.
+根据指定的 *delimiter* 构造一个新的 `DSV` 解析以及格式化。*delimiter* 必须是一个单字符(*i.e.*, 一个单一的 16位的代码单元); 所以 `ASCII` 可以作为分隔符，而 `emoji` 不可以。
 
 <a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L34 "Source")
 

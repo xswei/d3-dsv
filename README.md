@@ -164,19 +164,19 @@ var data = d3.csvParseRows(string, function(d, i) {
 
 将指定的 *rows* 对象数组格式化为 `DSV` 字符串。这个操作是 [*dsv*.parse](#dsv_parse) 的逆操作。行与行之间使用 `\n` 分开并且行内列之间使用指定的分隔符分开(比如 `CSV` 使用 `,`)。如果行内某些数值已经包含分隔符或者换行符则使用双引号 `"` 来表示转义.
 
-如果 *columns* 没有指定，则构成头行的列名的列表是由各行中所有对象的所有属性决定的，并且列名的次序是不确定的。如果指定了 *columns*，则其应该是由一组表示列名的字符串数组。例如:
+如果 *columns* 没有指定，则构成头行的列名的列表是由各行中所有对象的所有属性决定的，并且列名的次序是不确定的。如果指定了 *columns*，则其应该是由一组表示列名的字符串数组，并且列次序也会被确定。例如:
 
 ```js
 var string = d3.csvFormat(data, ["year", "make", "model", "length"]);
 ```
 
-每一个行对象上的所有字段都会被强制转换为字符串。为了获得更多的控制权，以及如何对字段进行格式化，首先将行映射到一个字符串数组的数组中，然后使用 [*dsv*.formatRows](#dsv_formatRows)。
+每一个行对象上的所有字段都会被强制转换为字符串。为了能对格式化操作进行更多的控制比如字段如何被格式化，首先遍历行对象数组，然后使用 [*dsv*.formatRows](#dsv_formatRows)。
 
 <a name="dsv_formatRows" href="#dsv_formatRows">#</a> <i>dsv</i>.<b>formatRows</b>(<i>rows</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L114 "Source")
 
-Formats the specified array of array of string *rows* as delimiter-separated values, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
+将指定行数组的数组格式化为字符串。这个操作是 [*dsv*.parseRows](#dsv_parseRows) 的逆操作。行与行之间使用 `\n` 分割，行内列与列之间使用指定的分隔符分割(比如 `CSV` 使用 `,`)。如果值中已经包含分隔符或者换行符则使用双引号表示转义。
 
-To convert an array of objects to an array of arrays while explicitly specifying the columns, use [*array*.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map). For example:
+在显式的指定列名称时可以先使用 [*array*.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) 将对象数组转为数组的数组。例如:
 
 ```js
 var string = d3.csvFormatRows(data.map(function(d, i) {
@@ -189,7 +189,7 @@ var string = d3.csvFormatRows(data.map(function(d, i) {
 }));
 ```
 
-If you like, you can also [*array*.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) this result with an array of column names to generate the first row:
+如果你乐意也可以使用 [*array*.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) 来生成一个带有列名的数组，这样最终格式化字符串的第一行会包含列名:
 
 ```js
 var string = d3.csvFormatRows([[

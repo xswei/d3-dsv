@@ -225,13 +225,13 @@ var string = d3.csvFormatRows([[
 
 <a name="dsv2dsv" href="#dsv2dsv">#</a> <b>dsv2dsv</b> [<i>options…</i>] [<i>file</i>]
 
-Converts the specified DSV input *file* to DSV (typically with a different delimiter or encoding). If *file* is not specified, defaults to reading from stdin. For example, to convert to CSV to TSV:
+将指定的输入 `DSV` *file* 转换为另一种不同分隔符(或不同编码)的 `DSV`。如果没有指定 *file* 则默认读取输入流。例如将 `CSV` 转为 `TSV`：
 
 ```
 csv2tsv < example.csv > example.tsv
 ```
 
-To convert windows-1252 CSV to utf-8 CSV:
+将 `windows-1252` 编码的 `CSV` 转为 `utf-8` 编码的 `CSV`:
 
 ```
 dsv2dsv --input-encoding windows-1252 < latin1.csv > utf8.csv
@@ -240,31 +240,31 @@ dsv2dsv --input-encoding windows-1252 < latin1.csv > utf8.csv
 <a name="dsv2dsv_help" href="dsv2dsv_help">#</a> dsv2dsv <b>-h</b>
 <br><a href="dsv2dsv_help">#</a> dsv2dsv <b>--help</b>
 
-Output usage information.
+输出帮助信息.
 
 <a name="dsv2dsv_version" href="dsv2dsv_version">#</a> dsv2dsv <b>-V</b>
 <br><a href="dsv2dsv_version">#</a> dsv2dsv <b>--version</b>
 
-Output the version number.
+输出版本号.
 
 <a name="dsv2dsv_out" href="dsv2dsv_out">#</a> dsv2dsv <b>-o</b> <i>file</i>
 <br><a href="dsv2dsv_out">#</a> dsv2dsv <b>--out</b> <i>file</i>
 
-Specify the output file name. Defaults to “-” for stdout.
+指定输出文件名。 Defaults to “-” for stdout.
 
 <a name="dsv2dsv_input_delimiter" href="dsv2dsv_input_delimiter">#</a> dsv2dsv <b>-r</b> <i>delimiter</i>
 <br><a href="dsv2dsv_input_delimiter">#</a> dsv2dsv <b>--input-delimiter</b> <i>delimiter</i>
 
-Specify the input delimiter character. Defaults to “,” for reading CSV. (You can enter a tab on the command line by typing ⌃V.)
+指定输入文件的分隔符，默认为 "," 表示读取 `CSV`。 (You can enter a tab on the command line by typing ⌃V.)
 
 <a name="dsv2dsv_input_encoding" href="dsv2dsv_input_encoding">#</a> dsv2dsv <b>--input-encoding</b> <i>encoding</i>
 
-Specify the input character encoding. Defaults to “utf8”.
+指定输出文件的编码，默认为 `utf-8`.
 
 <a name="dsv2dsv_output_delimiter" href="dsv2dsv_output_delimiter">#</a> dsv2dsv <b>-w</b> <i>delimiter</i>
 <br><a href="dsv2dsv_output_delimiter">#</a> dsv2dsv <b>--output-delimiter</b> <i>delimiter</i>
 
-Specify the output delimiter character. Defaults to “,” for writing CSV. (You can enter a tab on the command line by typing ⌃V.)
+指定输出文件的分隔符，默认为 "," 表示读取 `CSV`。(You can enter a tab on the command line by typing ⌃V.)
 
 <a name="dsv2dsv_output_encoding" href="dsv2dsv_output_encoding">#</a> dsv2dsv <b>--output-encoding</b> <i>encoding</i>
 

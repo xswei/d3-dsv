@@ -209,15 +209,15 @@ var string = d3.csvFormatRows([[
 
 ### Content Security Policy
 
-If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that [*dsv*.parse](#dsv_parse) requires `unsafe-eval` in the `script-src` directive, due to the (safe) use of dynamic code generation for fast parsing. (See [source](https://github.com/d3/d3-dsv/blob/master/src/dsv.js).) Alternatively, use [*dsv*.parseRows](#dsv_parseRows).
+如果 [content security policy](http://www.w3.org/TR/CSP/) 到位的话，请注意 [*dsv*.parse](#dsv_parse) 可能会导致安全问题，因为其实现使用了 `不安全的 - eval`(这种方式解析更快)，可以参考 [源码](https://github.com/d3/d3-dsv/blob/master/src/dsv.js)，在不能保证安全时可以使用 [*dsv*.parseRows](#dsv_parseRows) 替代。
 
 ### Byte-Order Marks
 
-DSV files sometimes begin with a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark); saving a spreadsheet in CSV UTF-8 format from Microsoft Excel, for example, will include a BOM. On the web this is not usually a problem because the [UTF-8 decode algorithm](https://encoding.spec.whatwg.org/#utf-8-decode) specified in the Encoding standard removes the BOM. Node.js, on the other hand, [does not remove the BOM](https://github.com/nodejs/node-v0.x-archive/issues/1918) when decoding UTF-8.
+`DSV` 文件有时候以 [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark) 开始；例如从 `Microsoft Excel` 保存的 `UTF-8` 编码的 `CSV` 包含 `BOM`。在 `web` 上通常不是问题因为 [UTF-8 解码算法](https://encoding.spec.whatwg.org/#utf-8-decode) 会自动删除 `BOM`. 但是在 `Nodejs` 中使用 `UTF-8` 编码时 [不会移除 `BOM`](https://github.com/nodejs/node-v0.x-archive/issues/1918)。
 
-If the BOM is not removed, the first character of the text is a zero-width non-breaking space. So if a CSV file with a BOM is parsed by [d3.csvParse](#csvParse), the first column’s name will begin with a zero-width non-breaking space. This can be hard to spot since this character is usually invisible when printed.
+如果 `BOM` 没有被移除则文本的第一个字符为一个零宽度的不间断空格。所以一个带有 `BOM` 的 `CSV` 由 [d3.csvParse](#csvParse) 解析时第一列的名称会以一个零宽度的不间断空格开头，这个很难被发现因为打印时不会被看见。
 
-To remove the BOM before parsing, consider using [strip-bom](https://www.npmjs.com/package/strip-bom).
+在解析之前移除 `BOM` 考虑使用 [strip-bom](https://www.npmjs.com/package/strip-bom).
 
 ## Command Line Reference
 

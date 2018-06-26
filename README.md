@@ -81,9 +81,9 @@ var data = d3.csvParse(string);
 
 <a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L34 "Source")
 
-Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
+解析指定的 *string*, 返回解析后的行对象数组。
 
-Unlike [*dsv*.parseRows](#dsv_parseRows), this method requires that the first line of the DSV content contains a delimiter-separated list of column names; these column names become the attributes on the returned objects. For example, consider the following CSV file:
+与 [*dsv*.parseRows](#dsv_parseRows) 不同, 这个方法要求 `DSV` 内容的第一行包含一组列名，这些列名将会被作为最终返回的数组的属性名。例如解析如下的 `CSV` 文件:
 
 ```
 Year,Make,Model,Length
@@ -91,7 +91,7 @@ Year,Make,Model,Length
 2000,Mercury,Cougar,2.38
 ```
 
-The resulting JavaScript array is:
+返回的 JavaScript 数组为:
 
 ```js
 [
@@ -100,15 +100,15 @@ The resulting JavaScript array is:
 ]
 ```
 
-The returned array also exposes a `columns` property containing the column names in input order (in contrast to Object.keys, whose iteration order is arbitrary). For example:
+返回的数组会包含一个 `columns` 属性表示输入数据的原始列名次序(因为解析之后成为对象类型，对象类型的属性迭代次序是不可靠的)。例如:
 
 ```js
 data.columns; // ["Year", "Make", "Model", "Length"]
 ```
 
-If a *row* conversion function is not specified, field values are strings. For safety, there is no automatic conversion to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function.
+如果没有指定 *row* 转换函数，则字段值将会是字符串。为了安全起见，没有将其自动转换为数值、日期或者其他的形式。在某些场景中，JavScript 会自动强制将字符串转为数值类型(例如使用 `+` 操作符), 但是更好的方式是使用 *row* 转换函数。
 
-If a *row* conversion function is specified, the specified function is invoked for each row, being passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be ommitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
+如果指定了 *row* 转换函数则会为每一行调用指定的函数，函数的参数依次为: 每一列的数据(`d`, 对象形式), 当前列的索引 `i` 以及列名数组。如果返回值为 `null` 或者 `undefined` 则当前行会被跳过并且最终不会出现在 *dsv*.parse 的解析结果中，返回值会作为当前行对象。例如:
 
 ```js
 var data = d3.csvParse(string, function(d) {
@@ -121,20 +121,20 @@ var data = d3.csvParse(string, function(d) {
 });
 ```
 
-Note: using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) or [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) is typically faster, though more restrictive. For example, `"30px"` when coerced using `+` returns `NaN`, while parseInt and parseFloat return `30`.
+注意: 使用 `+` 比 [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) 或 [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) 通常刚快但也更严格. 例如, `"30px"` 使用 `+` 返回 `NaN`, 而使用 `parseInt` 和  `parseFloat` 返回 `30`.
 
 <a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L43 "Source")
 
-Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of arrays representing the parsed rows.
+解析指定的 *string*, 返回一个数组的数组，每行数据以数组的形式表示.
 
-Unlike [*dsv*.parse](#dsv_parse), this method treats the header line as a standard row, and should be used whenever DSV content does not contain a header. Each row is represented as an array rather than an object. Rows may have variable length. For example, consider the following CSV file, which notably lacks a header line:
+与 [*dsv*.parse](#dsv_parse) 不同, 这个方法将第一行识别为数据而非列名，因此 `DSV` 内容中不应该再在第一行给出列名. 每一行会被解析为数组而不是对象. 并且数组的长度是可变的(取决于当前行可以被拆分为多少份). 例如解析如下没有列名行的 `CSV` 文件:
 
 ```
 1997,Ford,E350,2.34
 2000,Mercury,Cougar,2.38
 ```
 
-The resulting JavaScript array is:
+返回的 JavaScript 数组为:
 
 ```js
 [
@@ -143,9 +143,9 @@ The resulting JavaScript array is:
 ]
 ```
 
-If a *row* conversion function is not specified, field values are strings. For safety, there is no automatic conversion to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function.
+如果没有指定 *row* 转换函数，则字段值将会是字符串。为了安全起见，没有将其自动转换为数值、日期或者其他的形式。在某些场景中，JavScript 会自动强制将字符串转为数值类型(例如使用 `+` 操作符), 但是更好的方式是使用 *row* 转换函数。
 
-If a *row* conversion function is specified, the specified function is invoked for each row, being passed an array representing the current row (`d`), the index (`i`) starting at zero for the first row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be ommitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
+如果指定了 *row* 转换函数则会为每一行调用指定的函数，函数的参数依次为: 每一列的数据(`d`, 数组形式), 当前列的索引 `i` 以及列名数组。如果返回值为 `null` 或者 `undefined` 则当前行会被跳过并且最终不会出现在 *dsv*.parseRows 的解析结果中，返回值会作为当前行对象。例如:
 
 ```js
 var data = d3.csvParseRows(string, function(d, i) {
@@ -158,19 +158,19 @@ var data = d3.csvParseRows(string, function(d, i) {
 });
 ```
 
-In effect, *row* is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows.
+事实上，*row* 类似于将 [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) 和 [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) 应用到返回的结果中.
 
 <a name="dsv_format" href="#dsv_format">#</a> <i>dsv</i>.<b>format</b>(<i>rows</i>[, <i>columns</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L105 "Source")
 
-Formats the specified array of object *rows* as delimiter-separated values, returning a string. This operation is the inverse of [*dsv*.parse](#dsv_parse). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (`"`) or a newline will be escaped using double-quotes.
+将指定的 *rows* 对象数组格式化为 `DSV` 字符串。这个操作是 [*dsv*.parse](#dsv_parse) 的逆操作。行与行之间使用 `\n` 分开并且行内列之间使用指定的分隔符分开(比如 `CSV` 使用 `,`)。如果行内某些数值已经包含分隔符或者换行符则使用双引号 `"` 来表示转义.
 
-If *columns* is not specified, the list of column names that forms the header row is determined by the union of all properties on all objects in *rows*; the order of columns is nondeterministic. If *columns* is specified, it is an array of strings representing the column names. For example:
+如果 *columns* 没有指定，则构成头行的列名的列表是由各行中所有对象的所有属性决定的，并且列名的次序是不确定的。如果指定了 *columns*，则其应该是由一组表示列名的字符串数组。例如:
 
 ```js
 var string = d3.csvFormat(data, ["year", "make", "model", "length"]);
 ```
 
-All fields on each row object will be coerced to strings. For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
+每一个行对象上的所有字段都会被强制转换为字符串。为了获得更多的控制权，以及如何对字段进行格式化，首先将行映射到一个字符串数组的数组中，然后使用 [*dsv*.formatRows](#dsv_formatRows)。
 
 <a name="dsv_formatRows" href="#dsv_formatRows">#</a> <i>dsv</i>.<b>formatRows</b>(<i>rows</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js#L114 "Source")
 
